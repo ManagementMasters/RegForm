@@ -1,194 +1,511 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-body {
-  font-family: Arial;
-  font-size: 17px;
-  padding: 8px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.row {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-  margin: 0 -16px;
-}
-
-.col-25 {
-  -ms-flex: 25%; /* IE10 */
-  flex: 25%;
-}
-
-.col-50 {
-  -ms-flex: 50%; /* IE10 */
-  flex: 50%;
-}
-
-.col-75 {
-  -ms-flex: 75%; /* IE10 */
-  flex: 75%;
-}
-
-.col-25,
-.col-50,
-.col-75 {
-  padding: 0 16px;
-}
-
-.container {
-  background-color: #f2f2f2;
-  padding: 5px 20px 15px 20px;
-  border: 1px solid lightgrey;
-  border-radius: 3px;
-}
-
-input[type=text] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-label {
-  margin-bottom: 10px;
-  display: block;
-}
-
-.icon-container {
-  margin-bottom: 20px;
-  padding: 7px 0;
-  font-size: 24px;
-}
-
-.btn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px;
-  margin: 10px 0;
-  border: none;
-  width: 100%;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 17px;
-}
-
-.btn:hover {
-  background-color: #45a049;
-}
-
-a {
-  color: #2196F3;
-}
-
-hr {
-  border: 1px solid lightgrey;
-}
-
-span.price {
-  float: right;
-  color: grey;
-}
-
-/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
-@media (max-width: 800px) {
-  .row {
-    flex-direction: column-reverse;
-  }
-  .col-25 {
-    margin-bottom: 20px;
-  }
-}
-</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial;
+            font-size: 17px;
+            padding: 8px;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        .row {
+            display: -ms-flexbox;
+            /* IE10 */
+            display: flex;
+            -ms-flex-wrap: wrap;
+            /* IE10 */
+            flex-wrap: wrap;
+            margin: 0 -16px;
+        }
+        
+        .col-25 {
+            -ms-flex: 25%;
+            /* IE10 */
+            flex: 25%;
+        }
+        
+        .col-50 {
+            -ms-flex: 50%;
+            /* IE10 */
+            flex: 50%;
+        }
+        
+        .col-75 {
+            -ms-flex: 75%;
+            /* IE10 */
+            flex: 75%;
+        }
+        
+        .col-25,
+        .col-50,
+        .col-75 {
+            padding: 0 16px;
+        }
+        
+        .container {
+            background-color: #f2f2f2;
+            padding: 5px 20px 15px 20px;
+            border: 1px solid lightgrey;
+            border-radius: 3px;
+        }
+        
+        input[type=text] {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        
+        label {
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .icon-container {
+            margin-bottom: 20px;
+            padding: 7px 0;
+            font-size: 24px;
+        }
+        
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            width: 100%;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 17px;
+        }
+        
+        .btn:hover {
+            background-color: #45a049;
+        }
+        
+        a {
+            color: #2196F3;
+        }
+        
+        hr {
+            border: 1px solid lightgrey;
+        }
+        
+        span.price {
+            float: right;
+            color: grey;
+        }
+        /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+        
+        @media (max-width: 800px) {
+            .row {
+                flex-direction: column-reverse;
+            }
+            .col-25 {
+                margin-bottom: 20px;
+            }
+        }
+        
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.6s;
+            margin-bottom: 15px;
+        }
+        
+        .alert.success {
+            background-color: #4CAF50;
+        }
+        
+        .alert.info {
+            background-color: #2196F3;
+        }
+        
+        .alert.warning {
+            background-color: #ff9800;
+        }
+        
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .closebtn:hover {
+            color: black;
+        }
+        /* select */
+        /*the container must be positioned relative:*/
+        
+        .custom-select {
+            position: relative;
+            font-family: Arial;
+        }
+        
+        .custom-select select {
+            display: none;
+            /*hide original SELECT element:*/
+        }
+        
+        .select-selected {
+            background-color: DodgerBlue;
+        }
+        /*style the arrow inside the select element:*/
+        
+        .select-selected:after {
+            position: absolute;
+            content: "";
+            top: 14px;
+            right: 10px;
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+            border-color: #fff transparent transparent transparent;
+        }
+        /*point the arrow upwards when the select box is open (active):*/
+        
+        .select-selected.select-arrow-active:after {
+            border-color: transparent transparent #fff transparent;
+            top: 7px;
+        }
+        /*style the items (options), including the selected item:*/
+        
+        .select-items div,
+        .select-selected {
+            color: #ffffff;
+            padding: 8px 16px;
+            border: 1px solid transparent;
+            border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+            cursor: pointer;
+            user-select: none;
+        }
+        /*style items (options):*/
+        
+        .select-items {
+            position: absolute;
+            background-color: DodgerBlue;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 99;
+        }
+        /*hide the items when the select box is closed:*/
+        
+        .select-hide {
+            display: none;
+        }
+        
+        .select-items div:hover,
+        .same-as-selected {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
+
 <body>
 
-<h2>Responsive Checkout Form</h2>
-<p>Resize the browser window to see the effect. When the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other.</p>
-<div class="row">
-  <div class="col-75">
-    <div class="container">
-      <form action="/action_page.php">
-      
-        <div class="row">
-          <div class="col-50">
-            <h3>Billing Address</h3>
-            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-            <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
-            <label for="email"><i class="fa fa-envelope"></i> Email</label>
-            <input type="text" id="email" name="email" placeholder="john@example.com">
-            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-            <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
-            <label for="city"><i class="fa fa-institution"></i> City</label>
-            <input type="text" id="city" name="city" placeholder="New York">
+    <h2>Responsive Checkout Form</h2>
+    <p>Resize the browser window to see the effect. When the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other.</p>
+    <div class="row">
+        <div class="col-75">
+            <div class="container">
+                <form action="/action_page.php">
 
-            <div class="row">
-              <div class="col-50">
-                <label for="state">State</label>
-                <input type="text" id="state" name="state" placeholder="NY">
-              </div>
-              <div class="col-50">
-                <label for="zip">Zip</label>
-                <input type="text" id="zip" name="zip" placeholder="10001">
-              </div>
-            </div>
-          </div>
+                    <div class="row">
+                        <div class="col-50">
 
-          <div class="col-50">
-            <h3>Payment</h3>
-            <label for="fname">Accepted Cards</label>
-            <div class="icon-container">
-              <i class="fa fa-cc-visa" style="color:navy;"></i>
-              <i class="fa fa-cc-amex" style="color:blue;"></i>
-              <i class="fa fa-cc-mastercard" style="color:red;"></i>
-              <i class="fa fa-cc-discover" style="color:orange;"></i>
+
+                            <label for="socialprofile"><i class="fa fa-address-card-o"></i> Social Network Profile</label>
+                            <input type="text" id="socialprofile" name="socialprofile" placeholder="https://facebook.com/ManagementMasters/">
+
+                            <fb:login-button scope="public_profile,email,user_birthday,age_range,user_gender,user_link" onlogin="checkLoginState();">
+                            </fb:login-button>
+
+                            <h3>Full Name</h3>
+
+                            <div class="row">
+                                <div class="col-25">
+                                    <label for="soname">Last Name</label>
+                                    <input type="text" id="soname" name="soname" placeholder="Ivanov">
+                                </div>
+                                <div class="col-25">
+                                    <label for="name">First Name</label>
+                                    <input type="text" id="name" name="name" placeholder="Ivan">
+                                </div>
+                                <div class="col-25">
+                                    <label for="middlename">Middle Name</label>
+                                    <input type="text" id="middlename" name="middlename" placeholder="Ivanovich">
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-25">
+                                    <label for="bidthday">Bidthday</label>
+                                    <input type="text" id="bidthday" name="bidthday" placeholder="14.02.2014">
+                                </div>
+                                <div class="col-25">
+                                </div>
+                                <div class="col-25">
+                                </div>
+                            </div>
+
+                            <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                            <input type="text" id="email" name="email" placeholder="john@example.com">
+
+
+
+                            <label for="phone"><i class="fa fa-mobile-alt"></i> Phone</label>
+                            <input type="text" id="phone" name="phone" placeholder="+375 29 111-11-11">
+                            <!-- fas fa-phone -->
+                            <label for="workplace"><i class="fa fa-briefcase"></i> Work Place</label>
+                            <input type="text" id="workplace" name="workplace" placeholder="Imaguru">
+
+                            <label for="position"><i class="fa fa-institution"></i> Position</label>
+                            <input type="text" id="position" name="position" placeholder="Manager">
+
+                            <h1>Information source</h1>
+                            <div class="custom-select" style="width:200px;">
+                                <select>
+                                  <option value="0">Information source:</option>
+                                  <option value="1">Attended previously</option>
+                                  <option value="2">Facebook</option>
+                                  <option value="3">Vk.com</option>
+                                  <option value="4">Friends</option>
+                                  <option value="5">Mailing list</option>
+                                  <option value="6">Relax.by</option>
+                                  <option value="7">Dev.byr</option>
+                                  <option value="8">Tut.by</option>
+                                  <option value="9">Other
+                                      <input type="text" id="other" name="other" placeholder="Enter">
+                                      
+                                  </option>
+                                </select>
+                            </div>
+
+                            <label for="suggestions"><i class="fa fa-institution"></i> Suggestions</label>
+                            <input type="text" id="suggestions" name="suggestions" placeholder="Help us to become better:)">
+
+                        </div>
+                    </div>
+
+
+
             </div>
-            <label for="cname">Name on Card</label>
-            <input type="text" id="cname" name="cardname" placeholder="John More Doe">
-            <label for="ccnum">Credit card number</label>
-            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
-            <label for="expmonth">Exp Month</label>
-            <input type="text" id="expmonth" name="expmonth" placeholder="September">
-            <div class="row">
-              <div class="col-50">
-                <label for="expyear">Exp Year</label>
-                <input type="text" id="expyear" name="expyear" placeholder="2018">
-              </div>
-              <div class="col-50">
-                <label for="cvv">CVV</label>
-                <input type="text" id="cvv" name="cvv" placeholder="352">
-              </div>
-            </div>
-          </div>
-          
+
+            <input type="submit" value="Continue to checkout" class="btn">
+            </form>
         </div>
-        <label>
-          <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-        </label>
-        <input type="submit" value="Continue to checkout" class="btn">
-      </form>
     </div>
-  </div>
-  <div class="col-25">
-    <div class="container">
-      <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
-      <p><a href="#">Product 1</a> <span class="price">$15</span></p>
-      <p><a href="#">Product 2</a> <span class="price">$5</span></p>
-      <p><a href="#">Product 3</a> <span class="price">$8</span></p>
-      <p><a href="#">Product 4</a> <span class="price">$2</span></p>
-      <hr>
-      <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
     </div>
-  </div>
-</div>
+    <div class="alert info">
+        <span class="closebtn">&times;</span>
+        <strong>Info!</strong> We are doing our best to perform mailing
+    </div>
+
+    <a href="https://www.iubenda.com/privacy-policy/29649733" class="iubenda-white iubenda-embed " title="Privacy Policy">Privacy Policy</a>
 
 </body>
+<script>
+    (function(w, d) {
+        var loader = function() {
+            var s = d.createElement("script"),
+                tag = d.getElementsByTagName("script")[0];
+            s.src = "https://cdn.iubenda.com/iubenda.js";
+            tag.parentNode.insertBefore(s, tag);
+        };
+        if (w.addEventListener) {
+            w.addEventListener("load", loader, false);
+        } else if (w.attachEvent) {
+            w.attachEvent("onload", loader);
+        } else {
+            w.onload = loader;
+        }
+    })(window, document);
+
+    var close = document.getElementsByClassName("closebtn");
+    var i;
+
+    for (i = 0; i < close.length; i++) {
+        close[i].onclick = function() {
+            var div = this.parentElement;
+            div.style.opacity = "0";
+            setTimeout(function() {
+                div.style.display = "none";
+            }, 600);
+        }
+    }
+
+    var x, i, j, selElmnt, a, b, c;
+    /*look for any elements with the class "custom-select":*/
+    x = document.getElementsByClassName("custom-select");
+    for (i = 0; i < x.length; i++) {
+        selElmnt = x[i].getElementsByTagName("select")[0];
+        /*for each element, create a new DIV that will act as the selected item:*/
+        a = document.createElement("DIV");
+        a.setAttribute("class", "select-selected");
+        a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+        x[i].appendChild(a);
+        /*for each element, create a new DIV that will contain the option list:*/
+        b = document.createElement("DIV");
+        b.setAttribute("class", "select-items select-hide");
+        for (j = 0; j < selElmnt.length; j++) {
+            /*for each option in the original select element,
+            create a new DIV that will act as an option item:*/
+            c = document.createElement("DIV");
+            c.innerHTML = selElmnt.options[j].innerHTML;
+            c.addEventListener("click", function(e) {
+                /*when an item is clicked, update the original select box,
+                and the selected item:*/
+                var y, i, k, s, h;
+                s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                h = this.parentNode.previousSibling;
+                for (i = 0; i < s.length; i++) {
+                    if (s.options[i].innerHTML == this.innerHTML) {
+                        s.selectedIndex = i;
+                        h.innerHTML = this.innerHTML;
+                        y = this.parentNode.getElementsByClassName("same-as-selected");
+                        for (k = 0; k < y.length; k++) {
+                            y[k].removeAttribute("class");
+                        }
+                        this.setAttribute("class", "same-as-selected");
+                        break;
+                    }
+                }
+                h.click();
+            });
+            b.appendChild(c);
+        }
+        x[i].appendChild(b);
+        a.addEventListener("click", function(e) {
+            /*when the select box is clicked, close any other select boxes,
+            and open/close the current select box:*/
+            e.stopPropagation();
+            closeAllSelect(this);
+            this.nextSibling.classList.toggle("select-hide");
+            this.classList.toggle("select-arrow-active");
+        });
+    }
+
+    function closeAllSelect(elmnt) {
+        /*a function that will close all select boxes in the document,
+        except the current select box:*/
+        var x, y, i, arrNo = [];
+        x = document.getElementsByClassName("select-items");
+        y = document.getElementsByClassName("select-selected");
+        for (i = 0; i < y.length; i++) {
+            if (elmnt == y[i]) {
+                arrNo.push(i)
+            } else {
+                y[i].classList.remove("select-arrow-active");
+            }
+        }
+        for (i = 0; i < x.length; i++) {
+            if (arrNo.indexOf(i)) {
+                x[i].classList.add("select-hide");
+            }
+        }
+    }
+    /*if the user clicks anywhere outside the select box,
+    then close all select boxes:*/
+    document.addEventListener("click", closeAllSelect);
+
+    // This is called with the results from from FB.getLoginStatus().
+    function statusChangeCallback(response) {
+        console.log('statusChangeCallback');
+        console.log(response);
+        // The response object is returned with a status field that lets the
+        // app know the current login status of the person.
+        // Full docs on the response object can be found in the documentation
+        // for FB.getLoginStatus().
+        if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            testAPI();
+        } else {
+            // The person is not logged into your app or we are unable to tell.
+            document.getElementById('status').innerHTML = 'Please log ' +
+                'into this app.';
+        }
+
+        FB.api('/me', function(response) {
+            console.log(JSON.stringify(response));
+        });
+    }
+
+    // This function is called when someone finishes with the Login
+    // Button.  See the onlogin handler attached to it in the sample
+    // code below.
+    function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+    }
+
+
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '595634967459065',
+            autoLogAppEvents: true,
+            cookie: true, // enable cookies to allow the server to access 
+            // the session
+            xfbml: true, // parse social plugins on this page
+            version: 'v3.0' // use graph api version 2.8
+        });
+
+        // Now that we've initialized the JavaScript SDK, we call 
+        // FB.getLoginStatus().  This function gets the state of the
+        // person visiting this page and can return one of three states to
+        // the callback you provide.  They can be:
+        //
+        // 1. Logged into your app ('connected')
+        // 2. Logged into Facebook, but not your app ('not_authorized')
+        // 3. Not logged into Facebook and can't tell if they are logged into
+        //    your app or not.
+        //
+        // These three cases are handled in the callback function.
+
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+
+    };
+
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    // Here we run a very simple test of the Graph API after login is
+    // successful.  See statusChangeCallback() for when this call is made.
+    function testAPI() {
+        console.log('Welcome!  Fetching your information.... ');
+        FB.api('/me', function(response) {
+            console.log('Successful login for: ' + response.name);
+            document.getElementById('status').innerHTML =
+                'Thanks for logging in, ' + response.name + '!';
+        });
+    }
+</script>
+
 </html>
