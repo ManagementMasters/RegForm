@@ -1,2 +1,0 @@
-# RegForm
-Registration form
