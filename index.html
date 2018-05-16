@@ -236,6 +236,8 @@
                             <fb:login-button scope="public_profile,email,user_birthday,age_range,user_gender,user_link" onlogin="checkLoginState();">
                             </fb:login-button>
 
+                            <!-- VK Widget -->
+                            <div id="vk_auth"></div>
                             <h3>Full Name</h3>
 
                             <div class="row">
@@ -322,6 +324,7 @@
     <a href="https://www.iubenda.com/privacy-policy/29649733" class="iubenda-white iubenda-embed " title="Privacy Policy">Privacy Policy</a>
 
 </body>
+<script type="text/javascript" src="//vk.com/js/api/openapi.js?154"></script>
 <script>
     (function(w, d) {
         var loader = function() {
@@ -506,6 +509,18 @@
                 'Thanks for logging in, ' + response.name + '!';
         });
     }
+
+
+
+    VK.init({
+        apiId: 6480971
+    });
+
+
+
+    VK.Widgets.Auth("vk_auth", {
+        "onAuth": "function(data) {alert('user '+data['uid']+' authorized');}"
+    });
 </script>
 
 </html>
