@@ -130,6 +130,12 @@
                 statusChangeCallback(response);
             });
             FB.Event.subscribe('xfbml.render', finished_rendering);
+
+            FB.Event.subscribe('auth.authResponseChange', auth_response_change_callback);
+            FB.Event.subscribe('auth.statusChange', auth_status_change_callback);
+            // In your onload method:
+            FB.Event.subscribe('auth.login', login_event);
+            FB.Event.subscribe('auth.logout', logout_event);
         };
     </script>
 
@@ -148,22 +154,6 @@
 
         }
 
-        function FbLogin() {
-            let scope = 'public_profile,email,user_birthday,age_range,user_gender,user_link';
-            FB.getLoginStatus(function(response) {
-                if (response.status !== 'connected') {
-                    FB.login(function(response) {
-                        // handle the response
-                        statusChangeCallback(response);
-                    }, {
-                        scope: scope,
-                        return_scopes: true
-                    });
-                }
-            });
-        }
-
-
         function FbLogout() {
             FB.getLoginStatus(function(response) {
                 if (response.status === 'connected') {
@@ -177,6 +167,32 @@
                 }
             });
         }
+
+
+
+        // In your JavaScript code:
+        var login_event = function(response) {
+            console.log("login_event");
+            console.log(response.status);
+            console.log(response);
+        }
+
+        var logout_event = function(response) {
+                console.log("logout_event");
+                console.log(response.status);
+                console.log(response);
+            }
+            // In your JavaScript
+        var auth_response_change_callback = function(response) {
+            console.log("auth_response_change_callback");
+            statusChangeCallback(response);
+        }
+
+        var auth_status_change_callback = function(response) {
+            console.log("auth_status_change_callback: " + response.status);
+            statusChangeCallback(response);
+        }
+
         // This is called with the results from from FB.getLoginStatus().
         function statusChangeCallback(response) {
             console.log('statusChangeCallback');
@@ -222,7 +238,7 @@
         </div>
         <div class="fb-logout fb-inivisible">
 
-            <a href="#" onclick="FbLogout();">Logout</a>
+            <a href="#">Logout</a>
         </div>
 
         <div class="fb-fbstatus fb-inivisible">
