@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Facebook Login JavaScript Example</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .fb-container {
+            height: 2.5rem;
+            width: 15rem;
+        }
+        
+        .fb-border {
+            width: 100%;
+            height: 100%;
+            background: #4267b2;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+        }
+        
+        .fb-inivisible {
+            visibility: collapse
+        }
+        
+        .fb-spinner {
+            margin: auto;
+            width: 20%;
+            padding: .5rem;
+        }
+        
+        .fb-logout {
+            text-align: right;
+            margin-right: 1rem;
+            margin-top: 0.1rem
+        }
+        
+        .fb-spinner-item {
+            float: left;
+            width: 6px;
+            height: 24px;
+            background: #aeb5da;
+            border: 1px solid #8490c6;
+            box-sizing: border-box;
+            margin-right: 8px;
+            opacity: 0.2;
+            animation-name: spinner-anim;
+            animation-duration: .9s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+        
+        .fb-spinner-item:nth-child(2) {
+            animation-delay: .3s;
+        }
+        
+        .fb-spinner-item:nth-child(3) {
+            animation-delay: .6s;
+        }
+        
+        @keyframes spinner-anim {
+            from {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            to {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+        }
+        
+        .fade-in {
+            transition: opacity 2s;
+            -webkit-transition: opacity 2s;
+            animation-name: fade-in-anim;
+            animation-duration: .5s;
+            animation-timing-function: linear;
+        }
+        
+        @keyframes fade-in-anim {
+            from {
+                opacity: 0;
+                /* transform: scale(0.5); */
+            }
+            to {
+                opacity: 1;
+                /* transform: scale(1); */
+            }
+        }
+    </style>
+    <script>
+        // Load the SDK asynchronously
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '595634967459065',
+                autoLogAppEvents: true,
+                cookie: true, // enable cookies to allow the server to access 
+                // the session
+                xfbml: true, // parse social plugins on this page
+                version: 'v3.0' // use graph api version 2.8
+            });
+
+            // Now that we've initialized the JavaScript SDK, we call 
+            // FB.getLoginStatus().  This function gets the state of the
+            // person visiting this page and can return one of three states to
+            // the callback you provide.  They can be:
+            //
+            // 1. Logged into your app ('connected')
+            // 2. Logged into Facebook, but not your app ('not_authorized')
+            // 3. Not logged into Facebook and can't tell if they are logged into
+            //    your app or not.
+            //
+            // These three cases are handled in the callback function.
+
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+            FB.Event.subscribe('xfbml.render', finished_rendering);
+        };
+    </script>
+
+    <script>
+        const finished_rendering = function() {
+            console.log("finished rendering plugins");
+            let fbborder = document.querySelector(".fb-border")
+            let spinner = document.querySelector(".fb-spinner")
+            fbborder.removeChild(spinner);
+
+            let fbinivisible = document.querySelectorAll(".fb-inivisible");
+            fbinivisible.forEach(function(item) {
+                item.classList.remove("fb-inivisible");
+                item.classList.add("fade-in");
+            });
+
+        }
+
+        function FbLogout() {
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    FB.logout(function(response) {
+                        // this part just clears the $_SESSION var
+                        // replace with your own code
+                        $.post("/logout").done(function() {
+                            $('#status').html('<p>Logged out.</p>');
+                        });
+                    });
+                }
+            });
+        }
+    </script>
+
+    <div class="fb-container">
+        <div class="fb-border">
+
+            <div class="fb-spinner">
+                <div class="fb-spinner-item"></div>
+                <div class="fb-spinner-item"></div>
+                <div class="fb-spinner-item"></div>
+            </div>
+
+            <div class="fb-login-button fb-inivisible" data-max-rows="1" data-size="large" data-button-type="continue_with" data-use-continue-as="true"></div>
+
+            <!-- <div class="fb-login-button fb-inivisible" data-scope="public_profile,email,user_birthday,age_range,user_gender,user_link" data-max-rows="1" data-size="large" data-button-type="continue_with" data-use-continue-as="true"></div> -->
+
+
+
+        </div>
+        <div class="fb-logout fb-inivisible">
+
+            <a href="#" onclick="FbLogout();">Logout</a>
+        </div>
+    </div>
+</body>
+
+</html>
